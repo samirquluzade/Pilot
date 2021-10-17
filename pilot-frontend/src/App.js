@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import logo from './logo.svg';
 import './App.css';
 
@@ -19,6 +20,13 @@ function App() {
         </a>
       </header>
     </div>
+=======
+import Routes from "./router/route";
+
+function App() {
+  return (
+    <Routes />
+>>>>>>> frontend-login
   );
 }
 
