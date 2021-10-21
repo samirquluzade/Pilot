@@ -6,15 +6,13 @@ use App\Http\Controllers\Auth\AuthController;
 
 
 
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+ // Protected routes
+Route::group(['middleware'=>['auth:sanctum']], function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/users',[AuthController::class,'index']);
 });
 
 //  Authentication area
 
-Route::get('/users',[AuthController::class,'index']);
 Route::post('/register', [AuthController::class,'register']);
 Route::post('/login', [AuthController::class,'login']);
-Route::get('/logout', [AuthController::class, 'logout']);
-
