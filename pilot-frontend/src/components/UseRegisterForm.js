@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import {Redirect} from "react-router-dom";
 
 const useForm = (callback, validate) => {
     const [values, setValues] = useState({
@@ -16,10 +19,30 @@ const useForm = (callback, validate) => {
         setValues({ ...values, [name]: value });
     };
 
-    const handleSubmit = e => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setErrors(validate(values));
-        setIsSubmitting(true);
+         if(values.name === "" || values.email === "" || values.password === "" || values.passwordConfirm === "" || values.password!==values.passwordConfirm){
+            setErrors(validate(values));
+         }
+         else
+         {
+            const res = await axios.post('http://127.0.0.1:8000/api/register',{
+                name:values.name,
+                email:values.email,
+                password:values.password,
+                passwordConfirm:values.passwordConfirm
+            });
+            if(res.data.status === 200){
+                setIsSubmitting(true);
+                Swal.fire({
+                    position:'center',
+                    icon:'success',
+                    title:'You have successfully registered!',
+                    showConfirmButton:false,
+                    timer:1500
+                });
+            }
+         }
     };
     useEffect(() => {
         if (Object.keys(errors).length === 0 && isSubmitting) {
