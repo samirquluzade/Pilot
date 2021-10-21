@@ -48,7 +48,7 @@ const Routes = () => {
                                         <Login />
                                     </Route>
                                 )}
-                                 <Route path="/login"><Login /></Route>
+                                <Route path="/login"><Login /></Route>
                             </Switch>
                         </main>
                     </div>
@@ -58,3 +58,4 @@ const Routes = () => {
     );
 };
 export default Routes;
+

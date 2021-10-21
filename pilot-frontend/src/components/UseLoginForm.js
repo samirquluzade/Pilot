@@ -16,55 +16,37 @@ const useLogin = (callback, validate) => {
     };
     const handleSubmit = async(e) => {
         e.preventDefault();
-                setErrors(validate(items));
-<<<<<<< HEAD
-                try {
-=======
-            } else {
-                const res = await axios.post('http://127.0.0.1:8000/api/login', {
-                    email: items.email,
-                    password: items.password,
+        setErrors(validate(items));
+        try {
+            setIsSubmitting(true);
+            const res = await axios.post('http://127.0.0.1:8000/api/login', {
+                email: items.email,
+                password: items.password,
+            });
+            if (res.data.status === 202) {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'You are logged in!',
+                    showConfirmButton: false,
+                    timer: 1500
                 });
-                if (res.data.status === 202) {
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'You are logged in!',
-                        showConfirmButton: false,
-                        timer: 1500
-                    }).then(function (){
-                        window.location = '/user';
-                    })
->>>>>>> 1faaa2ecbde8519a55e707d101b9133225e10400
-                    setIsSubmitting(true);
-                    const res = await axios.post('http://127.0.0.1:8000/api/login', {
-                        email: items.email,
-                        password: items.password,
-                    });
-                    if (res.data.status === 202) {
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: 'You are logged in!',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Email or password is wrong!',
-                        });
-                        setItems({
-                            email: items.email,
-                            password: ''
-                        });
-                    }
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Email or password is wrong!',
+                });
+                setItems({
+                    email: items.email,
+                    password: ''
+                });
+            }
 
-                }
-                catch(err){
-                    console.log(err.message);
-                }
+        }
+        catch(err){
+            console.log(err.message);
+        }
     };
 
     useEffect(() => {

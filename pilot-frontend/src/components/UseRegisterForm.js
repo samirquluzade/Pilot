@@ -21,30 +21,30 @@ const useForm = (callback, validate) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-            setErrors(validate(values));
-            try {
-                setIsSubmitting(true);
-                const res = await axios.post('http://127.0.0.1:8000/api/register', {
-                    name: values.name,
-                    email: values.email,
-                    password: values.password,
-                    passwordConfirm: values.passwordConfirm
-                });
-                if (res.data.status === 200) {
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'You have successfully registered!',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                }
+        setErrors(validate(values));
+        try {
+            setIsSubmitting(true);
+            const res = await axios.post('http://127.0.0.1:8000/api/register', {
+                name: values.name,
+                email: values.email,
+                password: values.password,
+                passwordConfirm: values.passwordConfirm
+            });
+            if (res.data.status === 200) {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'You have successfully registered!',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             }
-            catch(err){
-                console.log(err.message);
-            }
+        }
+        catch(err){
+            console.log(err.message);
+        }
 
-         }
+    }
     useEffect(() => {
         if (Object.keys(errors).length === 0 && isSubmitting) {
             callback();
