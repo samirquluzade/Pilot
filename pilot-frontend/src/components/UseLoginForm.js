@@ -16,37 +16,37 @@ const useLogin = (callback, validate) => {
     };
     const handleSubmit = async(e) => {
         e.preventDefault();
-        setErrors(validate(items));
-            if (items.email === "" || items.password === "") {
                 setErrors(validate(items));
-            } else {
-                const res = await axios.post('http://127.0.0.1:8000/api/login', {
-                    email: items.email,
-                    password: items.password,
-                });
-                if (res.data.status === 202) {
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'You are logged in!',
-                        showConfirmButton: false,
-                        timer: 1500
-                    }).then(function (){
-                        window.location = '/';
-                    })
+                try {
                     setIsSubmitting(true);
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Email or password is wrong!',
-                    });
-                    setItems({
+                    const res = await axios.post('http://127.0.0.1:8000/api/login', {
                         email: items.email,
-                        password: ''
+                        password: items.password,
                     });
+                    if (res.data.status === 202) {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'You are logged in!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Email or password is wrong!',
+                        });
+                        setItems({
+                            email: items.email,
+                            password: ''
+                        });
+                    }
+
                 }
-            }
+                catch(err){
+                    console.log(err.message);
+                }
     };
 
     useEffect(() => {

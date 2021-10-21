@@ -20,19 +20,13 @@ const Routes = () => {
     return (
         <div className="content">
             <div className="row">
+                {isLogged && <User />}
                 {!isLogged && <Image />}
                 <div className="col-lg-4 col-md-6 col-12">
                     <div className="login-template">
                         <main>
                             <Switch>
                                 <Route exact path="/" render={() => <Redirect to="/login" />} />
-                                {!isSubmitted ? (
-                                    <Route path="/register">
-                                        <Register submitForm={submitForm} />
-                                    </Route>
-                                ) : (
-                                    <Redirect to="/login" />
-                                )}
                                 {!isLogged ? (
                                     <Route path="/login">
                                         <Login createForm={createForm} />
@@ -40,13 +34,21 @@ const Routes = () => {
                                 ) : (
                                     <Redirect to="/user" />
                                 )}
+                                {!isSubmitted ? (
+                                    <Route path="/register">
+                                        <Register submitForm={submitForm} />
+                                    </Route>
+                                ) : (
+                                    <Redirect to="/login" />
+                                )}
+
                                 {isSubmitted && <Route path="/register"><Register /></Route>}
                                 {isLogged && (
                                     <Route path="/login">
                                         <Login />
                                     </Route>
                                 )}
-                                <Route path="/user"><User /></Route>
+                                 <Route path="/login"><Login /></Route>
                             </Switch>
                         </main>
                     </div>
