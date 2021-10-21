@@ -16,17 +16,19 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|unique:users',
-            'password'=> 'required|string|min:6'
+            'password'=> 'required|string|min:6',
+            'passwordConfirm' => 'required|string|min:6'
         ]);
 
         $users = new User([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password'))
+            'passwordConfirm' => Hash::make($request->input('passwordConfirm'))
         ]);
 
         $users->save();
-        return response()->json(['message'=> 'User has been registered'], 200);
+        return response()->json(['status' => 200,'message'=> 'User has been registered']);
 
     }
 
@@ -38,10 +40,10 @@ class AuthController extends Controller
         ]);
         $credentials = request(['email','password']);
         if(!Auth::attempt($credentials)){
-            return response()->json(['message'=>'Unauthorized'], 401);
+            return response()->json(['status' => 401,'message'=>'Unauthorized']);
         }
         else{
-            return response()->json(['message'=>'Login Successfully'], 202);
+            return response()->json(['status' => 202,'message'=>'Login Successfully']);
         }
 
 
