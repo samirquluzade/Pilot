@@ -32,7 +32,7 @@ const useLogin = (callback, validate) => {
                         showConfirmButton: false,
                         timer: 1500
                     }).then(function (){
-                        window.location = '/';
+                        window.location = '/user';
                     })
                     setIsSubmitting(true);
                 } else {
