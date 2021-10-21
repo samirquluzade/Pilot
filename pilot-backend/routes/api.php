@@ -13,6 +13,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //  Authentication area
 
+Route::get('/users',[AuthController::class,'index']);
 Route::post('/register', [AuthController::class,'register']);
 Route::post('/login', [AuthController::class,'login']);
 Route::get('/logout', [AuthController::class, 'logout']);
