@@ -31,7 +31,9 @@ const useLogin = (callback, validate) => {
                         title: 'You are logged in!',
                         showConfirmButton: false,
                         timer: 1500
-                    });
+                    }).then(function (){
+                        window.location = '/';
+                    })
                     setIsSubmitting(true);
                 } else {
                     Swal.fire({
