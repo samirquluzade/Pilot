@@ -40,7 +40,9 @@ const useForm = (callback, validate) => {
                     title:'You have successfully registered!',
                     showConfirmButton:false,
                     timer:1500
-                });
+                }).then(function(){
+                    window.location = '/';
+                })
             }
          }
     };
