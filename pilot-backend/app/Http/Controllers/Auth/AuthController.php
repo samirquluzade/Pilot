@@ -23,7 +23,7 @@ class AuthController extends Controller
         $users = new User([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password'))
+            'password' => Hash::make($request->input('password')),
             'passwordConfirm' => Hash::make($request->input('passwordConfirm'))
         ]);
 
