@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Carbon\Carbon;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -25,34 +25,78 @@ class AuthController extends Controller
             'name' => 'required|string',
             'email' => 'required|string|unique:users',
             'password'=> 'required|string|min:6',
-            'passwordConfirm' => 'required|string|min:6'
+            'password_confirmation' => 'required|string|min:6'
         ]);
 
-        $users = new User([
+        $user = new User([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password'))
-            'passwordConfirm' => Hash::make($request->input('passwordConfirm'))
+            'password' => Hash::make($request->input('password')),
+            'password_confirmation' => Hash::make($request->input('password_confirmation')),
         ]);
+        $user->save();
 
-        $users->save();
-        return response()->json(['status' => 200,'message'=> 'User has been registered']);
+        $token = $user->createToken('mytoken')->plainTextToken;
+
+        $response = [
+            'user'=>$user,
+            'token'=>$token
+        ];
+
+        return response() -> json([
+                           'status' => 201,
+                       ]);
 
     }
 
+
+    public function logout(Request $request){
+        auth()->user()->tokens()->delete();
+
+        return [
+          'message'=>'Logged out'
+        ];
+    }
+
+
     public function login(Request $request)
     {
-        $request->validate([
+        $fields =$request->validate([
             'email' => 'required',
             'password'=> 'required|string'
         ]);
-        $credentials = request(['email','password']);
+
+        // Check email
+        $user = User::where('email',$fields['email'])->first();
+
+        //Check password
+        if (!$user || !Hash::check($fields['password'],$user->password)){
+            return response([
+               'message'=>'Bad creds'
+            ], 401);
+        }
+
+        $token = $user->createToken('mytoken')->plainTextToken;
+
+        $response = [
+            'user'=>$user,
+            'token'=>$token
+        ];
+
+        return response([$response,'status' => 201]);
+
+
+
+
+
+
+        /*$credentials = request(['email','password']);
         if(!Auth::attempt($credentials)){
             return response()->json(['status' => 401,'message'=>'Unauthorized']);
         }
         else{
             return response()->json(['status' => 202,'message'=>'Login Successfully']);
-        }
+        }*/
 
 
         // Create Personal Access Token
@@ -72,8 +116,8 @@ class AuthController extends Controller
         ]]);*/
     }
 
-    public function logout(Request $request) {
+    /*public function logout(Request $request) {
         Auth::logout();
         return redirect('/login');
-    }
+    }*/
 }
