@@ -8,7 +8,7 @@ const useForm = (callback, validate) => {
         name: "",
         email: "",
         password: "",
-        passwordConfirm: "",
+        password_confirmation: "",
     });
 
     const [errors, setErrors] = useState({});
@@ -21,35 +21,27 @@ const useForm = (callback, validate) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-            setErrors(validate(values));
-            try {
+        setErrors(validate(values));
+        try {
+            const res = await axios.post('http://127.0.0.1:8000/api/register', {
+                name: values.name,
+                email: values.email,
+                password: values.password,
+                password_confirmation: values.password_confirmation
+            });
+            if (res.data.status === 201) {
                 setIsSubmitting(true);
-                const res = await axios.post('http://127.0.0.1:8000/api/register', {
-                    name: values.name,
-                    email: values.email,
-                    password: values.password,
-                    passwordConfirm: values.passwordConfirm
-                });
-                if (res.data.status === 200) {
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'You have successfully registered!',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                }
             }
-            catch(err){
-                console.log(err.message);
-            }
-
-         }
+        }
+        catch(err){
+            console.log(err.message);
+        }
+    }
     useEffect(() => {
         if (Object.keys(errors).length === 0 && isSubmitting) {
             callback();
         }
-    }, [errors]);
+    }, [errors,isSubmitting]);
     return { handleChange, values, handleSubmit, errors };
 };
 export default useForm;

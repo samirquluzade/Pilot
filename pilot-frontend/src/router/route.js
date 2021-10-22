@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import {Route, Redirect, Switch} from "react-router-dom";
+import React, { useState,useEffect } from "react";
+import {Route, Redirect, Switch,useHistory} from "react-router-dom";
 
 import Image from "../components/image";
 import Login from "../screens/LoginScreen";
@@ -17,6 +17,14 @@ const Routes = () => {
     const createForm = () => {
         setIsLogged(true);
     };
+
+    // const history = useHistory();
+    // useEffect(() => {
+    //     const token = localStorage.getItem('token');
+    //     if(!token) {
+    //         history.push('/login');
+    //     }
+    // });
     return (
         <div className="content">
             <div className="row">
@@ -43,12 +51,8 @@ const Routes = () => {
                                 )}
 
                                 {isSubmitted && <Route path="/register"><Register /></Route>}
-                                {isLogged && (
-                                    <Route path="/login">
-                                        <Login />
-                                    </Route>
-                                )}
                                  <Route path="/login"><Login /></Route>
+                                {!isLogged && <Route exact path="/:type" render={() => <Redirect to="/login" />} />}
                             </Switch>
                         </main>
                     </div>

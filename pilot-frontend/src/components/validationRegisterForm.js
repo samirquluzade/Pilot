@@ -21,10 +21,10 @@ export default function validationRegisterForm(values) {
         errors.password = "Password needs to be 8 characters or more";
     }
 
-    if (!values.passwordConfirm) {
-        errors.passwordConfirm = "Password is required";
-    } else if (values.passwordConfirm !== values.password) {
-        errors.passwordConfirm = "Passwords do not match";
+    if (!values.password_confirmation) {
+        errors.password_confirmation = "Password is required";
+    } else if (values.password_confirmation !== values.password) {
+        errors.password_confirmation = "Passwords do not match";
     }
 
     return errors;
