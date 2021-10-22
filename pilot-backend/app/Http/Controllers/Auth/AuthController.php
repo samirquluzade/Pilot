@@ -24,7 +24,6 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|unique:users',
-            'password'=> 'required|string|confirmed|min:6',
             'password'=> 'required|string|min:6',
             'password_confirmation' => 'required|string|min:6'
         ]);
@@ -37,6 +36,7 @@ class AuthController extends Controller
         ]);
         $user->save();
 
+        // Get Personal Token
         $token = $user->createToken('mytoken')->plainTextToken;
 
         $response = [
@@ -44,10 +44,7 @@ class AuthController extends Controller
             'token'=>$token
         ];
 
-        return response($response, 201);
-        return response() -> json([
-                           'status' => 201,
-                       ]);
+        return response() -> json(['status' => 201]);
 
     }
 
@@ -73,9 +70,7 @@ class AuthController extends Controller
 
         //Check password
         if (!$user || !Hash::check($fields['password'],$user->password)){
-            return response([
-               'message'=>'Bad creds'
-            ], 401);
+            return response(['message'=>'Bad creds'], 401);
         }
 
         $token = $user->createToken('mytoken')->plainTextToken;
@@ -91,6 +86,8 @@ class AuthController extends Controller
 
 
 
+
+        // 1 st Token Area
 
         /*$credentials = request(['email','password']);
         if(!Auth::attempt($credentials)){

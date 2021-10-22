@@ -7,10 +7,7 @@ use App\Http\Controllers\Auth\AuthController;
 
 
  // Protected routes
-Route::group(['middleware'=>['auth:sanctum']], function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/users',[AuthController::class,'index']);
-});
+
 // Route::group(['middleware'=>['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/users',[AuthController::class,'index']);
