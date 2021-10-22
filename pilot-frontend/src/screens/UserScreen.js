@@ -21,7 +21,6 @@ export default function User() {
         }
         renderData();
     },[]);
-
     return(
         <div className="container">
             <div className="row">

@@ -35,10 +35,10 @@ export const Form = ({handleSubmit,title,errors,items,handleChange,action,secAct
                     {errors.passwordConfirm && <p>{errors.passwordConfirm}</p>}
                     <Input
                         type="password"
-                        name="passwordConfirm"
+                        name="password_confirmation"
                         className="form-control"
                         placeholder="Password Confirm"
-                        value={items.passwordConfirm}
+                        value={items.password_confirmation}
                         handleChange={handleChange}
                     />
                 <div className="container-button">

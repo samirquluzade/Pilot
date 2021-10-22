@@ -20,25 +20,25 @@ const useLogin = (callback, validate) => {
                 email: items.email,
                 password: items.password,
             });
-            if (res.data.status === 202) {
-                setIsSubmitting(true);
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Email or password is wrong!',
-                });
-                setItems({
-                    email: items.email,
-                    password: ''
-                });
+
+                if (res.data.status === 201) {
+                    setIsSubmitting(true);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Email or password is wrong!',
+                    });
+                    setItems({
+                        email: items.email,
+                        password: ''
+                    });
+                }
             }
-        }
         catch(err){
             console.log(err.message);
         }
     }
-
     const handleSubmit = async(e) => {
         e.preventDefault();
         setErrors(validate(items));

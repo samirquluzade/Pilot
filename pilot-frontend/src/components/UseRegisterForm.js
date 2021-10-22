@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
-import Swal from 'sweetalert2';
-import {Redirect} from "react-router-dom";
 
 const useForm = (callback, validate) => {
     const [values, setValues] = useState({
         name: "",
         email: "",
         password: "",
-        passwordConfirm: "",
+        password_confirmation: "",
     });
 
     const [errors, setErrors] = useState({});
@@ -23,21 +21,19 @@ const useForm = (callback, validate) => {
         e.preventDefault();
         setErrors(validate(values));
         try {
-
             const res = await axios.post('http://127.0.0.1:8000/api/register', {
                 name: values.name,
                 email: values.email,
                 password: values.password,
-                passwordConfirm: values.passwordConfirm
+                password_confirmation: values.password_confirmation
             });
-            if (res.data.status === 200) {
+            if (res.data.status === 201) {
                 setIsSubmitting(true);
             }
         }
         catch(err){
             console.log(err.message);
         }
-
     }
     useEffect(() => {
         if (Object.keys(errors).length === 0 && isSubmitting) {
