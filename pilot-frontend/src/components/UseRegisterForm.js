@@ -21,7 +21,7 @@ const useForm = (callback, validate) => {
         e.preventDefault();
         setErrors(validate(values));
         try {
-            const res = await axios.post('http://127.0.0.1:8000/api/register', {
+            const res = await axios.post('https://pilotmain.herokuapp.com/api/register', {
                 name: values.name,
                 email: values.email,
                 password: values.password,
