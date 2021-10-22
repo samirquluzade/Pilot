@@ -20,7 +20,6 @@ const useLogin = (callback, validate) => {
                 email: items.email,
                 password: items.password,
             });
-
                 if (res.data.status === 201) {
                     setIsSubmitting(true);
                 } else {

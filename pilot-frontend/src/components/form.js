@@ -32,7 +32,7 @@ export const Form = ({handleSubmit,title,errors,items,handleChange,action,secAct
                         handleChange={handleChange}
                     />
                     <Inputs errors={errors} items={items} handleChange={handleChange}/>
-                    {errors.passwordConfirm && <p>{errors.passwordConfirm}</p>}
+                    {errors.password_confirmation && <p>{errors.password_confirmation}</p>}
                     <Input
                         type="password"
                         name="password_confirmation"
