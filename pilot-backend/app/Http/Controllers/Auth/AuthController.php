@@ -24,22 +24,16 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|unique:users',
-<<<<<<< HEAD
             'password'=> 'required|string|confirmed|min:6',
-=======
             'password'=> 'required|string|min:6',
             'password_confirmation' => 'required|string|min:6'
->>>>>>> add-auth-backend
         ]);
 
         $user = new User([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
-<<<<<<< HEAD
-=======
             'password_confirmation' => Hash::make($request->input('password_confirmation')),
->>>>>>> add-auth-backend
         ]);
         $user->save();
 
@@ -50,13 +44,10 @@ class AuthController extends Controller
             'token'=>$token
         ];
 
-<<<<<<< HEAD
         return response($response, 201);
-=======
         return response() -> json([
                            'status' => 201,
                        ]);
->>>>>>> add-auth-backend
 
     }
 
@@ -94,11 +85,7 @@ class AuthController extends Controller
             'token'=>$token
         ];
 
-<<<<<<< HEAD
-        return response($response, 201);
-=======
         return response([$response,'status' => 201]);
->>>>>>> add-auth-backend
 
 
 
