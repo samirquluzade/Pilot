@@ -19,7 +19,7 @@ const useLogin = (callback, validate) => {
         e.preventDefault();
         setErrors(validate(items));
         try {
-            const res = await axios.post('http://127.0.0.1:8000/api/login', {
+            const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/login`, {
                 email: items.email,
                 password: items.password,
             });
