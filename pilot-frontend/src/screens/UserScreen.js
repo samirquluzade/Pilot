@@ -12,7 +12,7 @@ export default function User() {
         const renderData = async() => {
             setLoading(true);
             try {
-                const res = await axios.get('https://pilotmain.herokuapp.com/api/users');
+                const res = await axios.get('http://127.0.0.1:8000/api/users');
                 if (res.data.status === 200) {
                     setData(res.data.users);
                 }
