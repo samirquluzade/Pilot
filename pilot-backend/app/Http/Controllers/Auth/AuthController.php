@@ -53,7 +53,8 @@ class AuthController extends Controller
         auth()->user()->tokens()->delete();
 
         return [
-          'message'=>'Logged out'
+          'message'=>'Logged out',
+          'status' => 201
         ];
     }
 
@@ -80,7 +81,7 @@ class AuthController extends Controller
             'token'=>$token
         ];
 
-        return response([$response,'status' => 201]);
+        return response(['response' => $response,'status' => 201]);
 
 
 
@@ -115,8 +116,8 @@ class AuthController extends Controller
         ]]);*/
     }
 
-    /*public function logout(Request $request) {
-        Auth::logout();
-        return redirect('/login');
-    }*/
+//     public function logout(Request $request) {
+//         Auth::logout();
+//         return redirect('/login');
+//     }
 }
