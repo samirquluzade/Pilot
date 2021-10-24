@@ -24,6 +24,12 @@ const useLogin = (callback, validate) => {
                 password: items.password,
             });
             if (res.data.status === 201) {
+                if(res.data.response.user.admin === 0){
+                    localStorage.setItem("tokenUser",JSON.stringify(res.data.response.token));
+                }
+                else if(res.data.response.user.admin === 1){
+                    localStorage.setItem("tokenAdmin",JSON.stringify(res.data.response.token));
+                }
                 setIsSubmitting(true);
             } else {
                 Swal.fire({

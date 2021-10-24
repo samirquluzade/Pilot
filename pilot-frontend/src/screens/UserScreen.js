@@ -1,12 +1,11 @@
 import React,{useEffect,useState} from "react";
 import axios from 'axios';
 
-export default function User() {
+export default function User({logoutHandler}) {
     const [data,setData] = useState([]);
     const [loading,setLoading] = useState(true);
-    const logoutHandler = (function() {
-        window.location = '/login';
-    });
+
+    const tokenUser = localStorage.getItem('tokenUser');
 
     useEffect(() => {
         const renderData = async() => {
@@ -27,6 +26,7 @@ export default function User() {
     return(
         <div className="container">
             <div className="row">
+                    {tokenUser === null && (
                 <div className="col-lg-11">
                     <div className="table-responsive-md">
                         <table className="table table-bordered table-striped">
@@ -39,19 +39,21 @@ export default function User() {
                             </tr>
                             </thead>
                             <tbody>
-                            {loading && <span>Loading</span>}
-                            {!loading && data.map((item) => (
-                                <tr key={item.id}>
-                                    <td>{item.id}</td>
-                                    <td>{item.name}</td>
-                                    <td>{item.email}</td>
-                                    <td>{item.admin}</td>
+                                <tr>
+                                    {loading ? <td>Loading</td> : null}
                                 </tr>
-                            ))}
+                                {!loading ? data.map((item) => (
+                                    <tr key={item.id}>
+                                        <td>{item.id}</td>
+                                        <td>{item.name}</td>
+                                        <td>{item.email}</td>
+                                        <td>{item.admin}</td>
+                                    </tr>
+                                )) : null}
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </div>)}
                 <div className="col-lg-1">
                     <button className="btn btn-danger" onClick={logoutHandler}>Logout</button>
                 </div>
