@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
@@ -83,6 +84,44 @@ class AuthController extends Controller
 
         return response(['response' => $response,'status' => 201]);
 
+    }
+
+
+        /* Delete User */
+        public function delete($id) {
+
+        $users = User::findOrFail($id);
+        $users->delete();
+        return response(['status' => 201]);
+
+    }
+
+
+    /* Update User */
+
+    public function update(Request $request,$id){
+
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $admin = $request->input('admin');
+        $updated_at = date("Y-m-d H:i:s");
+
+        DB::table('users')->where('id', $id)->update([
+            ['name' => $name, 'email' => $email, 'admin' => $admin, 'updated_at' => $updated_at, ]
+        ]);
+
+        return response(['status' => 201]);
+    }
+
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -113,11 +152,12 @@ class AuthController extends Controller
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString()
 
-        ]]);*/
-    }
+        ]]);
 
-//     public function logout(Request $request) {
-//         Auth::logout();
-//         return redirect('/login');
-//     }
-}
+
+    public function logout(Request $request) {
+        Auth::logout();
+        return redirect('/login');
+    }
+*/
+
