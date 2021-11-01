@@ -1,5 +1,5 @@
 import React from 'react';
-import Input from '../components/input'
+import Input from './input'
 export const Inputs = ({errors,items,handleChange}) => {
     return(
         <div>

@@ -175,6 +175,10 @@ form {
   color: #1c7430;
 }
 
+.new-class {
+  margin: 0 auto !important;
+}
+
 .button-create {
   display: flex;
   justify-content: center;

@@ -7,6 +7,7 @@ const useForm = (callback, validate) => {
         email: "",
         password: "",
         password_confirmation: "",
+        admin:0
     });
 
     const [errors, setErrors] = useState({});
@@ -20,12 +21,14 @@ const useForm = (callback, validate) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors(validate(values));
+        console.log(values.admin);
         try {
             const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/register`, {
                 name: values.name,
                 email: values.email,
                 password: values.password,
-                password_confirmation: values.password_confirmation
+                password_confirmation: values.password_confirmation,
+                admin:values.admin
             });
             if (res.data.status === 201) {
                 setIsSubmitting(true);

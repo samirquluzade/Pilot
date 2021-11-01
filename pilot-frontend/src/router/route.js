@@ -1,14 +1,18 @@
 
 import React, { useState,useEffect } from "react";
 import {Route, Redirect, Switch,useHistory} from "react-router-dom";
+import axios from 'axios';
 import Image from "../components/image";
 import Login from "../screens/LoginScreen";
 import Register from "../screens/RegisterScreen";
 import User from "../screens/UserScreen";
+import AddUser from "../screens/AddUserScreen";
 
 const Routes = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isLogged, setIsLogged] = useState(false);
+    const [isNewUser,setIsNewUser] = useState(false);
+    const [isReadOnly,setIsReadOnly] = useState(false);
 
     const tokenUser = localStorage.getItem('tokenUser');
     const tokenAdmin = localStorage.getItem('tokenAdmin');
@@ -36,23 +40,31 @@ const Routes = () => {
         }
         setIsLogged(false);
     });
-
     const history = useHistory();
+
+    const addUserHandler = () => {
+        setIsReadOnly(false);
+        history.push('/adduser');
+        setIsNewUser(true);
+    }
     useEffect(() => {
         if(tokenUser || tokenAdmin) {
             setIsLogged(true);
+            setIsReadOnly(true);
             history.push('/user');
         }
     },[history,tokenAdmin,tokenUser]);
+    let myClass = isNewUser ? 'col-lg-4 new-class col-md-6 col-12' : 'col-lg-4 col-md-6 col-12';
     return (
         <div className="content">
             <div className="row">
-                {isLogged && <User logoutHandler={logoutHandler}/>}
+                {isLogged && isReadOnly && <User logoutHandler={logoutHandler} addUserHandler={addUserHandler}/>}
                 {!isLogged && <Image />}
-                <div className="col-lg-4 col-md-6 col-12">
+                <div className={myClass}>
                     <div className="login-template">
                         <main>
                             <Switch>
+                                {isLogged && isNewUser && <Route path="/adduser"><AddUser logoutHandler={logoutHandler} submitForm={submitForm}/></Route>}
                                 <Route exact path="/" render={() => <Redirect to="/login" />} />
                                 {!isLogged ? (
                                     <Route path="/login">

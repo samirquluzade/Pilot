@@ -3,14 +3,15 @@ import { Link } from "react-router-dom";
 
 import Input from "../components/input";
 import Inputs from "../components/inputs";
+import RegisterInputs from "./RegisterInputs";
 
 export const Form = ({handleSubmit,title,errors,items,handleChange,action,secAction}) => {
     return(
         <form onSubmit={handleSubmit}>
-            <h4 className="text-center title">{title}</h4>
             <div className="validate-input">
-                {secAction === "Create your Account" ? (
+                {secAction === "Create your Account" && (
                     <>
+                    <h4 className="text-center title">{title}</h4>
                         <Inputs errors={errors} items={items} handleChange={handleChange}/>
                         <div className="container-button">
                             <button className="button-login">{action}</button>
@@ -20,27 +21,10 @@ export const Form = ({handleSubmit,title,errors,items,handleChange,action,secAct
                                 {secAction}
                             </Link>
                         </div>
-                    </>) : (
+                    </>)} {secAction==="Login" && (
                 <>
-                    {errors.name && <p>{errors.name}</p>}
-                    <Input
-                        type="text"
-                        name="name"
-                        className="form-control"
-                        placeholder="Name"
-                        value={items.name}
-                        handleChange={handleChange}
-                    />
-                    <Inputs errors={errors} items={items} handleChange={handleChange}/>
-                    {errors.password_confirmation && <p>{errors.password_confirmation}</p>}
-                    <Input
-                        type="password"
-                        name="password_confirmation"
-                        className="form-control"
-                        placeholder="Password Confirm"
-                        value={items.password_confirmation}
-                        handleChange={handleChange}
-                    />
+                    <h4 className="text-center title">{title}</h4>
+                    <RegisterInputs errors={errors} items={items} handleChange={handleChange}/>
                 <div className="container-button">
                     <button className="button-create">{action}</button>
                 </div>
@@ -55,6 +39,20 @@ export const Form = ({handleSubmit,title,errors,items,handleChange,action,secAct
                 </>
                 )
             }
+                {action==="Create Account" && (
+                    <div>
+                        <h4 className="text-center title">{title}</h4>
+                        <RegisterInputs errors={errors} items={items} handleChange={handleChange}/>
+                        <select className="form-control" name="admin" onChange={handleChange}>
+                            <option value="" disabled selected>Admin</option>
+                            <option value="0">False</option>
+                            <option value="1">True</option>
+                        </select>
+                        <div className="container-button">
+                            <button className="button-create">{action}</button>
+                        </div>
+                    </div>
+                )}
             </div>
         </form>
     );
