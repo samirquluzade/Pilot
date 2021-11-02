@@ -10,8 +10,8 @@ use App\Http\Controllers\Auth\AuthController;
 
 Route::group(['middleware'=>['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::post('/delete', [AuthController::class, 'delete'])->name('delete');;
-    Route::post('/update', [AuthController::class, 'update'])->name('update');;
+    Route::post('/delete/{id}', [AuthController::class, 'delete'])->name('delete');;
+    Route::post('/update/{id}', [AuthController::class, 'update'])->name('update');;
  });
 
 //  Authentication area
