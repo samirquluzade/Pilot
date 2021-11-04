@@ -36,8 +36,8 @@ const EditForm = ({users,handleSubmit,error}) => {
                 onChange={e=> setEmail(e.target.value)}
             /><br/>
             <select className="form-control" name="admin" onChange={e=> setAdmin(e.target.value)}>
-                {users.admin === 0 && <><option value="0" defaultValue="False">False</option><option value="1">True</option></>}
-                {users.admin === 1 && <><option value="1" defaultValue="True">True</option><option value="0">False</option></>}
+                {users.admin === "0" && <><option value="0" defaultValue="False">False</option><option value="1">True</option></>}
+                {users.admin === "1" && <><option value="1" defaultValue="True">True</option><option value="0">False</option></>}
             </select>
             <div className="container-button">
                 <button className="button-create">Update</button>
