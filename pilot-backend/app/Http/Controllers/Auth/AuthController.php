@@ -24,7 +24,6 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|unique:users',
-            'admin' => 'string',
             'password'=> 'required|string|min:6',
             'password_confirmation' => 'required|string|min:6'
         ]);
@@ -32,7 +31,7 @@ class AuthController extends Controller
         $user = new User([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
-            'admin' => $request->input('admin'),
+            'admin' => $request->input('admin',0),
             'password' => Hash::make($request->input('password')),
             'password_confirmation' => Hash::make($request->input('password_confirmation')),
         ]);
@@ -93,7 +92,7 @@ class AuthController extends Controller
 
         $users = User::findOrFail($id);
         $users->delete();
-        return response(['status' => 201]);
+        return response(['status' => 202]);
 
     }
 

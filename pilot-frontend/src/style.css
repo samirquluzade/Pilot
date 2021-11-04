@@ -154,6 +154,10 @@ label {
   background: #333;
 }
 
+.red {
+  color: red;
+}
+
 .new-user {
   padding: 2% 0;
 }

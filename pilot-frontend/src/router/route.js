@@ -10,6 +10,7 @@ import AddUser from "../screens/AddUserScreen";
 
 const Routes = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [isLogged, setIsLogged] = useState(false);
     const [isNewUser,setIsNewUser] = useState(false);
     const [isReadOnly,setIsReadOnly] = useState(false);
@@ -19,11 +20,13 @@ const Routes = () => {
 
     const submitForm = () => {
         setIsSubmitted(true);
-
-        setTimeout(() => {
-            setIsSubmitted(false);
-        },1000)
     };
+    const submittingForm = () => {
+        setIsSubmitting(true);
+        setTimeout(() => {
+            setIsSubmitting(false);
+        },1000)
+    }
 
     const createForm = () => {
         setIsLogged(true);
@@ -33,10 +36,12 @@ const Routes = () => {
         if(tokenUser === null){
             localStorage.removeItem('tokenAdmin');
             setIsSubmitted(false);
+            setIsLogged(false);
         }
         else if(tokenAdmin === null){
             localStorage.removeItem('tokenUser');
             setIsSubmitted(false);
+            setIsLogged(false);
         }
         setIsLogged(false);
     });
@@ -59,6 +64,7 @@ const Routes = () => {
         <div className="content">
             <div className="row">
                 {isLogged && isReadOnly && <User logoutHandler={logoutHandler} addUserHandler={addUserHandler}/>}
+                {isLogged && isSubmitted && <User logoutHandler={logoutHandler} addUserHandler={addUserHandler}/>}
                 {!isLogged && <Image />}
                 <div className={myClass}>
                     <div className="login-template">
@@ -73,9 +79,9 @@ const Routes = () => {
                                 ) : (
                                     <Redirect to="/user" />
                                 )}
-                                {!isSubmitted ? (
+                                {!isSubmitting ? (
                                     <Route path="/register">
-                                        <Register submitForm={submitForm}/>
+                                        <Register submittingForm={submittingForm}/>
                                     </Route>
                                 ) : (
                                     <Redirect to="/login"/>

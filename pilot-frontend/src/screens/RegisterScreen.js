@@ -4,9 +4,9 @@ import Form from '../components/form';
 import useForm from "../components/UseRegisterForm";
 import validate from "../components/validationRegisterForm";
 
-export default function RegisterScreen({ submitForm }) {
+export default function RegisterScreen({ submittingForm }) {
     const { handleChange, values, handleSubmit, errors } = useForm(
-        submitForm,
+        submittingForm,
         validate
     );
     return (
