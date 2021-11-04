@@ -1,7 +1,7 @@
 
 import React, { useState,useEffect } from "react";
 import {Route, Redirect, Switch,useHistory} from "react-router-dom";
-import axios from 'axios';
+
 import Image from "../components/image";
 import Login from "../screens/LoginScreen";
 import Register from "../screens/RegisterScreen";

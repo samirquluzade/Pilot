@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 
 const EditForm = ({users,handleSubmit,error}) => {
-    const [id,setId] = useState(users.id);
+    const [id] = useState(users.id);
     const [name,setName] = useState(users.name);
     const [email,setEmail] = useState(users.email);
     const [admin,setAdmin] = useState(users.admin);

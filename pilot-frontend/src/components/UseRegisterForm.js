@@ -15,14 +15,10 @@ const useForm = (callback, validate) => {
     const tokenAdmin = localStorage.getItem('tokenAdmin');
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [isCreating,setIsCreating] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setValues({ ...values, [name]: value });
-        // setValues(prevState => ({
-        //     ...prevState,name:value
-        // }))
     };
 
     const handleSubmit = async (e) => {
@@ -48,7 +44,7 @@ const useForm = (callback, validate) => {
         }
     }
     useEffect(() => {
-        if ((Object.keys(errors).length === 0 && isSubmitting) || (Object.keys(errors).length === 0 && isCreating)) {
+        if ((Object.keys(errors).length === 0 && isSubmitting)) {
             callback();
         }
     }, [errors,isSubmitting,callback]);

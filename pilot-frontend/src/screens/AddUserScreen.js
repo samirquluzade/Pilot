@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from "react";
+import React from "react";
 import useForm from "../components/UseRegisterForm";
 import validate from "../components/validationRegisterForm";
 import Form from "../components/form";

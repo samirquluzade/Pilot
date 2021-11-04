@@ -72,7 +72,6 @@ export default function User({logoutHandler,addUserHandler}) {
     const editHandler = (item) => {
         setShow(true);
         setUser(item);
-        // return users;
     }
     const handleClose = () => {
         setShow(false);
